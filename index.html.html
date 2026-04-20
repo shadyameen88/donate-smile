@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تبرعك يرسم بسمة</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  color: white;
+  overflow-x: hidden;
+}
+header {
+  text-align: center;
+  padding: 60px 20px;
+  animation: fadeIn 2s ease-in-out;
+}
+h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+.subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+}
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+  animation: slideUp 1.5s ease;
+}
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  margin-top: 10px;
+  background: #22c55e;
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.btn:hover {
+  background: #16a34a;
+  transform: scale(1.05);
+}
+.address {
+  background: #0b1220;
+  padding: 10px;
+  border-radius: 10px;
+  word-break: break-all;
+}
+img {
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 20px;
+  animation: fadeIn 2s ease;
+}
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes slideUp {
+  from {transform: translateY(50px); opacity: 0;}
+  to {transform: translateY(0); opacity: 1;}
+}
+footer {
+  text-align: center;
+  padding: 30px;
+  opacity: 0.7;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>تبرعك يرسم بسمة 💙</h1>
+  <div class="subtitle">مبادرة لدعم الأطفال والأمل في غزة</div>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>🌟 عن المشروع</h2>
+    <p>
+      هذا المشروع الإنساني يهدف إلى دعم الأطفال وتوفير الاحتياجات الأساسية لهم عبر التبرعات الرقمية باستخدام USDT.
+      كل مساهمة تصنع فرقًا حقيقيًا.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>💳 التبرع عبر USDT</h2>
+    <p>يمكنك التبرع مباشرة عبر محفظة USDT التالية:</p>
+    <div class="address" id="wallet">TD8fkqHy5cGQU3tFf7Qi7AeeqrAWi6e9Rm</div>
+    <button class="btn" onclick="copyWallet()">نسخ العنوان</button>
+  </div>
+
+  <div class="card">
+    <h2>❤️ لماذا تتبرع؟</h2>
+    <ul>
+      <li>دعم الأطفال المحتاجين</li>
+      <li>توفير التعليم والاحتياجات الأساسية</li>
+      <li>نشر الأمل في الظروف الصعبة</li>
+    </ul>
+  </div>
+
+  <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d" alt="children hope">
+
+</div>
+
+<footer>
+  © 2026 تبرعك يرسم بسمة - جميع الحقوق محفوظة
+</footer>
+
+<script>
+function copyWallet() {
+  const text = document.getElementById("wallet").innerText;
+  navigator.clipboard.writeText(text);
+  alert("تم نسخ عنوان المحفظة!");
+}
+</script>
+
+</body>
+</html>
