@@ -3,132 +3,457 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تبرعك يرسم بسمة</title>
+<title>تبرع بـ USDT</title>
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e3a8a);
-  color: white;
-  overflow-x: hidden;
-}
-header {
-  text-align: center;
-  padding: 60px 20px;
-  animation: fadeIn 2s ease-in-out;
-}
-h1 {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-.subtitle {
-  font-size: 18px;
-  opacity: 0.8;
-}
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
-}
-.card {
-  background: rgba(255,255,255,0.08);
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 20px;
-  backdrop-filter: blur(10px);
-  animation: slideUp 1.5s ease;
-}
-.btn {
-  display: inline-block;
-  padding: 12px 20px;
-  margin-top: 10px;
-  background: #22c55e;
-  color: white;
-  border-radius: 10px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.btn:hover {
-  background: #16a34a;
-  transform: scale(1.05);
-}
-.address {
-  background: #0b1220;
-  padding: 10px;
-  border-radius: 10px;
-  word-break: break-all;
-}
-img {
-  width: 100%;
-  border-radius: 15px;
-  margin-top: 20px;
-  animation: fadeIn 2s ease;
-}
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-@keyframes slideUp {
-  from {transform: translateY(50px); opacity: 0;}
-  to {transform: translateY(0); opacity: 1;}
-}
-footer {
-  text-align: center;
-  padding: 30px;
-  opacity: 0.7;
-  font-size: 14px;
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal-50: #E1F5EE; --teal-100: #9FE1CB; --teal-400: #1D9E75; --teal-600: #0F6E56; --teal-800: #085041;
+    --gray-50: #F1EFE8; --gray-200: #B4B2A9; --gray-600: #5F5E5A; --gray-800: #444441;
+    --green-50: #EAF3DE; --green-800: #27500A;
+    --amber-50: #FAEEDA; --amber-800: #633806;
+    --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px;
+  }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f5f7f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+    color: #2C2C2A;
+  }
+  .page { max-width: 520px; width: 100%; }
+
+  .hero {
+    background: var(--teal-400);
+    border-radius: var(--radius-xl);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .hero-icon {
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  .hero-icon svg { width: 28px; height: 28px; fill: #fff; }
+  .hero h1 { font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+  .hero p { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.6; }
+
+  .stats-row {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; margin-bottom: 1rem;
+  }
+  .stat-card {
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: var(--radius-lg);
+    padding: 12px 10px;
+    text-align: center;
+  }
+  .stat-val { font-size: 18px; font-weight: 600; color: var(--teal-600); }
+  .stat-label { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+
+  .progress-card {
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .progress-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+  .progress-title { font-size: 14px; font-weight: 500; color: #2C2C2A; }
+  .progress-pct { font-size: 13px; color: var(--teal-600); font-weight: 500; }
+  .progress-bg { height: 8px; background: var(--gray-50); border-radius: 4px; overflow: hidden; }
+  .progress-fill { height: 8px; background: var(--teal-400); border-radius: 4px; transition: width 1s ease; }
+  .progress-nums { display: flex; justify-content: space-between; margin-top: 6px; font-size: 12px; color: var(--gray-600); }
+
+  .card {
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-title { font-size: 15px; font-weight: 500; color: #2C2C2A; margin-bottom: 1rem; }
+
+  .amounts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+  .amt-btn {
+    padding: 10px 6px;
+    border: 0.5px solid #d3d1c7;
+    border-radius: var(--radius-md);
+    background: #fff;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .amt-btn:hover { border-color: var(--teal-400); background: var(--teal-50); }
+  .amt-btn.selected { border: 2px solid var(--teal-400); background: var(--teal-50); }
+  .amt-btn .amt-num { font-size: 16px; font-weight: 600; color: var(--teal-600); }
+  .amt-btn .amt-cur { font-size: 11px; color: var(--gray-600); }
+  .amt-btn .amt-desc { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+
+  .custom-input-wrap { position: relative; }
+  .custom-input-wrap label { font-size: 13px; color: var(--gray-600); display: block; margin-bottom: 6px; }
+  .custom-input-wrap input {
+    width: 100%;
+    padding: 10px 60px 10px 14px;
+    border: 0.5px solid #d3d1c7;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    color: #2C2C2A;
+    background: #fff;
+    outline: none;
+    direction: ltr;
+    text-align: left;
+  }
+  .custom-input-wrap input:focus { border-color: var(--teal-400); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
+  .input-suffix {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    font-size: 13px; color: var(--teal-600); font-weight: 500;
+  }
+
+  .wallet-box {
+    background: var(--teal-50);
+    border: 0.5px solid var(--teal-100);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .wallet-label { font-size: 12px; color: var(--teal-600); font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .wallet-label svg { width: 14px; height: 14px; }
+  .wallet-addr {
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--teal-800);
+    word-break: break-all;
+    direction: ltr;
+    text-align: left;
+    background: rgba(255,255,255,0.6);
+    border-radius: var(--radius-md);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .copy-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border: 0.5px solid var(--teal-400);
+    border-radius: var(--radius-md);
+    background: #fff;
+    color: var(--teal-600);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    width: fit-content;
+  }
+  .copy-btn:hover { background: var(--teal-50); }
+  .copy-btn svg { width: 14px; height: 14px; }
+
+  .qr-wrap { text-align: center; margin-top: 14px; }
+  .qr-box {
+    display: inline-block;
+    background: #fff;
+    border: 0.5px solid #d3d1c7;
+    border-radius: var(--radius-md);
+    padding: 10px;
+  }
+  .qr-box canvas { display: block; }
+  .qr-label { font-size: 12px; color: var(--gray-600); margin-top: 8px; }
+
+  .network-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--amber-50);
+    color: var(--amber-800);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: var(--radius-md);
+    margin-top: 10px;
+  }
+  .network-badge svg { width: 12px; height: 12px; }
+
+  .steps-list { list-style: none; counter-reset: steps; }
+  .steps-list li {
+    counter-increment: steps;
+    display: flex; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 0.5px solid #e8e8e8;
+    font-size: 13px;
+    color: #444441;
+    line-height: 1.5;
+  }
+  .steps-list li:last-child { border-bottom: none; }
+  .steps-list li::before {
+    content: counter(steps);
+    min-width: 22px; height: 22px;
+    background: var(--teal-50);
+    color: var(--teal-800);
+    font-size: 12px; font-weight: 600;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .donate-btn {
+    display: block; width: 100%;
+    padding: 14px;
+    background: var(--teal-400);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    transition: background 0.15s;
+    text-align: center;
+  }
+  .donate-btn:hover { background: var(--teal-600); }
+
+  .success-banner {
+    display: none;
+    background: var(--green-50);
+    border: 0.5px solid #97c459;
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.25rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .success-banner.show { display: block; }
+  .success-banner p { font-size: 14px; color: var(--green-800); font-weight: 500; }
+  .success-banner small { font-size: 12px; color: #3B6D11; }
+
+  .footer-note { font-size: 12px; color: var(--gray-600); text-align: center; line-height: 1.6; padding: 0 1rem 2rem; }
 </style>
 </head>
 <body>
+<div class="page">
 
-<header>
-  <h1>تبرعك يرسم بسمة 💙</h1>
-  <div class="subtitle">مبادرة لدعم الأطفال والأمل في غزة</div>
-</header>
+  <div class="hero">
+    <div class="hero-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-4H9l3-6 3 6h-2v4z"/></svg>
+    </div>
+    <h1>ساهم في صنع الفرق</h1>
+    <p>تبرعك يصل مباشرة — بدون وسيط، بدون عمولة بنكية<br>عبر شبكة TRC20 (Tron)</p>
+  </div>
 
-<div class="container">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-val" id="totalDonors">847</div>
+      <div class="stat-label">متبرع</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val" id="totalRaised">12,430</div>
+      <div class="stat-label">USDT جُمعت</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val">15,000</div>
+      <div class="stat-label">الهدف USDT</div>
+    </div>
+  </div>
 
-  <div class="card">
-    <h2>🌟 عن المشروع</h2>
-    <p>
-      هذا المشروع الإنساني يهدف إلى دعم الأطفال وتوفير الاحتياجات الأساسية لهم عبر التبرعات الرقمية باستخدام USDT.
-      كل مساهمة تصنع فرقًا حقيقيًا.
-    </p>
+  <div class="progress-card">
+    <div class="progress-header">
+      <span class="progress-title">التقدم نحو الهدف</span>
+      <span class="progress-pct" id="pctText">82.9%</span>
+    </div>
+    <div class="progress-bg">
+      <div class="progress-fill" id="progressBar" style="width: 82.9%"></div>
+    </div>
+    <div class="progress-nums">
+      <span id="raisedNum">12,430 USDT</span>
+      <span>الهدف: 15,000 USDT</span>
+    </div>
   </div>
 
   <div class="card">
-    <h2>💳 التبرع عبر USDT</h2>
-    <p>يمكنك التبرع مباشرة عبر محفظة USDT التالية:</p>
-    <div class="address" id="wallet">TD8fkqHy5cGQU3tFf7Qi7AeeqrAWi6e9Rm</div>
-    <button class="btn" onclick="copyWallet()">نسخ العنوان</button>
+    <div class="card-title">اختر مبلغ التبرع</div>
+    <div class="amounts-grid">
+      <div class="amt-btn selected" onclick="selectAmt(this, 10)">
+        <div class="amt-num">10</div>
+        <div class="amt-cur">USDT</div>
+        <div class="amt-desc">تبرع رمزي</div>
+      </div>
+      <div class="amt-btn" onclick="selectAmt(this, 50)">
+        <div class="amt-num">50</div>
+        <div class="amt-cur">USDT</div>
+        <div class="amt-desc">مساهم فاعل</div>
+      </div>
+      <div class="amt-btn" onclick="selectAmt(this, 100)">
+        <div class="amt-num">100</div>
+        <div class="amt-cur">USDT</div>
+        <div class="amt-desc">داعم كريم</div>
+      </div>
+      <div class="amt-btn" onclick="selectAmt(this, 250)">
+        <div class="amt-num">250</div>
+        <div class="amt-cur">USDT</div>
+        <div class="amt-desc">محسن متميز</div>
+      </div>
+      <div class="amt-btn" onclick="selectAmt(this, 500)">
+        <div class="amt-num">500</div>
+        <div class="amt-cur">USDT</div>
+        <div class="amt-desc">راعٍ ذهبي</div>
+      </div>
+      <div class="amt-btn" onclick="selectAmt(this, 0)" id="customBtn">
+        <div class="amt-num" style="font-size:13px">مبلغ</div>
+        <div class="amt-cur">خاص</div>
+        <div class="amt-desc">أدخل يدوياً</div>
+      </div>
+    </div>
+    <div class="custom-input-wrap" id="customWrap" style="display:none">
+      <label>أدخل المبلغ</label>
+      <input type="number" id="customAmt" placeholder="مثال: 75" min="1" oninput="updateCustom()">
+      <span class="input-suffix">USDT</span>
+    </div>
   </div>
+
+  <div class="wallet-box">
+    <div class="wallet-label">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 7.28V5c0-1.1-.9-2-2-2H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2.28A2 2 0 0022 15V9a2 2 0 00-1-1.72zM20 9v6h-7V9h7zM5 19V5h14v2h-6c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h6v2H5z"/><circle cx="16" cy="12" r="1.5"/></svg>
+      عنوان محفظة USDT — TRC20
+    </div>
+    <div class="wallet-addr" id="walletAddr">TYourWalletAddressHere123456789ABCDEF</div>
+    <button class="copy-btn" onclick="copyWallet()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+      <span id="copyText">نسخ العنوان</span>
+    </button>
+    <div class="qr-wrap">
+      <div class="qr-box">
+        <canvas id="qrCanvas" width="140" height="140"></canvas>
+      </div>
+      <div class="qr-label">امسح QR من تطبيق محفظتك</div>
+    </div>
+    <div style="text-align:center">
+      <span class="network-badge">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        TRC20 · Tron Network فقط
+      </span>
+    </div>
+  </div>
+
+  <div class="success-banner" id="successBanner">
+    <p>شكراً جزيلاً على تبرعك!</p>
+    <small>سيتم التحقق من المعاملة خلال دقائق على شبكة Tron</small>
+  </div>
+
+  <button class="donate-btn" onclick="confirmDonate()">
+    تأكيد التبرع · <span id="btnAmt">10</span> USDT
+  </button>
 
   <div class="card">
-    <h2>❤️ لماذا تتبرع؟</h2>
-    <ul>
-      <li>دعم الأطفال المحتاجين</li>
-      <li>توفير التعليم والاحتياجات الأساسية</li>
-      <li>نشر الأمل في الظروف الصعبة</li>
-    </ul>
+    <div class="card-title">كيف تتبرع؟</div>
+    <ol class="steps-list">
+      <li>اختر مبلغ التبرع أعلاه</li>
+      <li>افتح محفظتك (Trust Wallet، TronLink، Binance...)</li>
+      <li>اضغط "إرسال" واختر شبكة <strong>TRC20</strong></li>
+      <li>انسخ عنوان المحفظة أو امسح رمز QR</li>
+      <li>أدخل المبلغ بالـ USDT وأكد الإرسال</li>
+    </ol>
   </div>
 
-  <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d" alt="children hope">
+  <p class="footer-note">
+    تأكد دائماً من اختيار شبكة <strong>TRC20 (Tron)</strong> عند الإرسال.<br>
+    الإرسال على شبكة خاطئة قد يؤدي لفقدان الأموال.<br><br>
+    للتواصل والاستفسار: <a href="mailto:donate@example.com" style="color:#0F6E56">donate@example.com</a>
+  </p>
 
 </div>
 
-<footer>
-  © 2026 تبرعك يرسم بسمة - جميع الحقوق محفوظة
-</footer>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
-function copyWallet() {
-  const text = document.getElementById("wallet").innerText;
-  navigator.clipboard.writeText(text);
-  alert("تم نسخ عنوان المحفظة!");
-}
-</script>
+  const WALLET = 'TQ3JKiA6g77PeH95b3R8hemb7LiUDcDdHT';
+  let selectedAmt = 10;
 
+  document.getElementById('walletAddr').textContent = WALLET;
+  document.getElementById('qrCanvas').title = WALLET;
+
+  function drawQR() {
+    const canvas = document.getElementById('qrCanvas');
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0,0,140,140);
+    try {
+      new QRCode(canvas, {
+        text: 'tron:' + WALLET,
+        width: 140, height: 140,
+        colorDark: '#085041', colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } catch(e) {
+      ctx.fillStyle = '#E1F5EE';
+      ctx.fillRect(0,0,140,140);
+      ctx.fillStyle = '#085041';
+      ctx.font = '11px monospace';
+      ctx.textAlign = 'center';
+      const words = WALLET.match(/.{1,12}/g) || [];
+      words.forEach((w,i) => ctx.fillText(w, 70, 30 + i*18));
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', drawQR);
+  setTimeout(drawQR, 500);
+
+  function selectAmt(el, amt) {
+    document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    const wrap = document.getElementById('customWrap');
+    if (amt === 0) {
+      wrap.style.display = 'block';
+      selectedAmt = parseInt(document.getElementById('customAmt').value) || 0;
+    } else {
+      wrap.style.display = 'none';
+      selectedAmt = amt;
+    }
+    updateBtn();
+  }
+
+  function updateCustom() {
+    selectedAmt = parseInt(document.getElementById('customAmt').value) || 0;
+    updateBtn();
+  }
+
+  function updateBtn() {
+    document.getElementById('btnAmt').textContent = selectedAmt || '—';
+  }
+
+  function copyWallet() {
+    navigator.clipboard.writeText(WALLET).then(() => {
+      const btn = document.getElementById('copyText');
+      btn.textContent = 'تم النسخ!';
+      setTimeout(() => btn.textContent = 'نسخ العنوان', 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = WALLET; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      const btn = document.getElementById('copyText');
+      btn.textContent = 'تم النسخ!';
+      setTimeout(() => btn.textContent = 'نسخ العنوان', 2000);
+    });
+  }
+
+  function confirmDonate() {
+    if (!selectedAmt || selectedAmt < 1) {
+      alert('يرجى إدخال مبلغ صحيح');
+      return;
+    }
+    document.getElementById('successBanner').classList.add('show');
+    const newRaised = 12430 + selectedAmt;
+    const newDonors = 848;
+    const pct = Math.round((newRaised / 15000) * 1000) / 10;
+    document.getElementById('totalRaised').textContent = newRaised.toLocaleString();
+    document.getElementById('totalDonors').textContent = newDonors;
+    document.getElementById('pctText').textContent = pct + '%';
+    document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+    document.getElementById('raisedNum').textContent = newRaised.toLocaleString() + ' USDT';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
